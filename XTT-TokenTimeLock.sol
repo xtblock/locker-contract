@@ -50,6 +50,9 @@ contract TokenTimelock {
         return _beneficiary;
     }
     
+    /**
+     * @return the unlocker of the tokens.
+     */
     function unlocker() public view virtual returns (address) {
         return _unlocker;
     }
@@ -59,6 +62,14 @@ contract TokenTimelock {
      */
     function releaseTime() public view virtual returns (uint256) {
         return _releaseTime;
+    }
+    
+    /**
+     *@notice Extend Lock Time.
+     */
+    function extendLockTime(uint256 newReleaseTime_) public virtual {
+        require(newReleaseTime_ > releaseTime(), "TokenTimelock: new release time can't be before the current release time");
+        _releaseTime = newReleaseTime_;
     }
     
     /**
