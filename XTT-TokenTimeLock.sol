@@ -68,6 +68,7 @@ contract TokenTimelock {
      *@notice Extend Lock Time.
      */
     function extendLockTime(uint256 newReleaseTime_) public virtual {
+        require(_unlocker == msg.sender, "Ownable: caller is not the current unlocker");
         require(newReleaseTime_ > releaseTime(), "TokenTimelock: new release time can't be before the current release time");
         _releaseTime = newReleaseTime_;
     }
